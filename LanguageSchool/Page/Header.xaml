@@ -1,0 +1,22 @@
+﻿<Page x:Class="LanguageSchool.Header"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:LanguageSchool"
+      mc:Ignorable="d" 
+      d:MinHeight="80" d:MinWidth="800"
+      Title="Header">
+
+    <Grid>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+            <Image Height="70" Source="/images/school_logo.ico" Style="{StaticResource ImageLogo}"></Image>
+            <TextBlock VerticalAlignment="Center" Style="{StaticResource LogoText}">Леарн</TextBlock>
+        </StackPanel>
+        <StackPanel Margin="200,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Width="400">
+            <Button Template="{StaticResource ButtonStyle}" Name="Services" Click="Services_Click" Margin="5" Width="100">Услуги</Button>
+            <Button Template="{StaticResource ButtonStyle}" Name="Admin" Click="Admin_Click"  Margin="5" Width="100">Админ</Button>
+            <Button Template="{StaticResource ButtonStyle}" Visibility="Collapsed" Name="Record" Click="Record_Click" Margin="5" Width="150">Ближайшие записи</Button>
+        </StackPanel>
+    </Grid>
+</Page>

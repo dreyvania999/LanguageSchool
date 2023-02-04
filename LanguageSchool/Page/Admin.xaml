@@ -1,0 +1,18 @@
+﻿<Window x:Class="LanguageSchool.Admin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LanguageSchool"
+        mc:Ignorable="d"
+        Title="Admin"  MinHeight="120" MinWidth="200" MaxHeight="120" MaxWidth="200">
+    <Grid>
+        <StackPanel Background="#04a0ff">
+            <GroupBox Header="Введите код">
+                <TextBox Name="Code"></TextBox>
+            </GroupBox>
+
+            <Button Template="{StaticResource ButtonStyle}" Name="Add" Click="Add_Click" Margin="10">Сохранить</Button>
+        </StackPanel>
+    </Grid>
+</Window>

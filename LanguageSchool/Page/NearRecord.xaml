@@ -1,0 +1,43 @@
+﻿<Page x:Class="LanguageSchool.NearRecord"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:LanguageSchool"
+      mc:Ignorable="d" 
+      d:MinHeight="450" d:MinWidth="800"
+      Title="Ближайшие записи">
+
+    <Grid>
+        <ListView Name="ListRecord" ScrollViewer.HorizontalScrollBarVisibility="Hidden" HorizontalContentAlignment="Stretch" AlternationCount="2">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Style.Triggers>
+                        <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                            <Setter Property="Background" Value="#e7fabf" />
+                        </Trigger>
+                        <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                            <Setter Property="Background" Value="White" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border Style="{StaticResource BorderStyle}">
+                        <Grid VerticalAlignment="Center"    >
+                            <StackPanel>
+                                <TextBlock Text="{Binding Service.Title,StringFormat=Наименование услуги: {0}}"></TextBlock>
+                                <TextBlock Text="{Binding Client.FullName,StringFormat=ФИО клиента: {0}}"></TextBlock>
+                                <TextBlock Text="{Binding Client.Email,StringFormat=Email: {0}}"></TextBlock>
+                                <TextBlock Text="{Binding Client.Phone,StringFormat=Телефон: {0}}"></TextBlock>
+                                <TextBlock Text="{Binding StartTime, StringFormat=Дата и Время записи: {0:dd MMMM yyyy HH:mm}}"></TextBlock>
+                                <TextBlock Text="{Binding RemainingTime,StringFormat=Оставшееся время до занятия: {0}}" Foreground="{Binding UpcomingEntriesColor}"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</Page>
