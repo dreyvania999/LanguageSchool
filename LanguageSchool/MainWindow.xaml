@@ -6,10 +6,10 @@
         xmlns:local="clr-namespace:LanguageSchool"
         mc:Ignorable="d"
         d:MinHeight="450" d:MinWidth="800"
-        Title="Школа иностранных языков" >
-    <Grid>
+        Title="Школа иностранных языков" Icon="/images/school_logo.ico" >
+    <Grid>        
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="1*"/>
             <RowDefinition Height="6*"/>
         </Grid.RowDefinitions>
 

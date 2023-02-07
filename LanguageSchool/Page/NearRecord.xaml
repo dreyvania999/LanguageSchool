@@ -9,7 +9,13 @@
       Title="Ближайшие записи">
 
     <Grid>
-        <ListView Name="ListRecord" ScrollViewer.HorizontalScrollBarVisibility="Hidden" HorizontalContentAlignment="Stretch" AlternationCount="2">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="350"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <TextBlock x:Name="Title" FontSize="28" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Ближайшие записи"/>
+        <ListView Grid.Row="1" Name="ListRecord" ScrollViewer.HorizontalScrollBarVisibility="Hidden" HorizontalContentAlignment="Stretch" AlternationCount="2">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Style.Triggers>
@@ -39,5 +45,6 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <Button Grid.Row="2" Template="{StaticResource ButtonStyle}" HorizontalAlignment="Center"  Margin="5" Name="Main" Click="Main_Click" >На главную</Button>
     </Grid>
 </Page>

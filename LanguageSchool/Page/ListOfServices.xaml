@@ -13,7 +13,7 @@
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="40"/>
-            <RowDefinition Height="270"/>
+            <RowDefinition Height="320"/>
             <RowDefinition Height="40" />
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
@@ -69,7 +69,7 @@
                             <Grid Grid.Column="1">
                                 <Grid.RowDefinitions>
                                     <RowDefinition/>
-                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="50"/>
                                 </Grid.RowDefinitions>
                                 <Grid Grid.Row="0">
                                     <StackPanel>
@@ -84,9 +84,9 @@
                                 </Grid>
                                 <Grid Grid.Row="1" >
                                     <StackPanel Orientation="Horizontal">
-                                        <Button Margin="3" Template="{StaticResource ButtonStyle}" Uid="{Binding ID}" Name="NewRecord" Click="NewRecord_Click" Visibility="{Binding btn_admin}">Записать</Button>
-                                        <Button Margin="3" Template="{StaticResource ButtonStyle}" Uid="{Binding ID}" Name="Delete" Click="Delete_Click" Visibility="{Binding btn_admin}" >Удаление</Button>
-                                        <Button Margin="3" Template="{StaticResource ButtonStyle}" Uid="{Binding ID}" Name="Update" Click="Update_Click" Visibility="{Binding btn_admin}">Редактирование</Button>
+                                        <Button Margin="3" Template="{StaticResource ButtonStyle}" Height="30" Uid="{Binding ID}" Name="NewRecord" Click="NewRecord_Click" Visibility="{Binding btn_admin}">Записать</Button>
+                                        <Button Margin="3" Template="{StaticResource ButtonStyle}" Height="30" Uid="{Binding ID}" Name="Delete" Click="Delete_Click" Visibility="{Binding btn_admin}" >Удаление</Button>
+                                        <Button Margin="3" Template="{StaticResource ButtonStyle}" Height="30" Uid="{Binding ID}" Name="Update" Click="Update_Click" Visibility="{Binding btn_admin}">Редактирование</Button>
                                     </StackPanel>
                                 </Grid>
                             </Grid>

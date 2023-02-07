@@ -24,7 +24,8 @@ namespace LanguageSchool
     {
         public NearRecord()
         {
-            InitializeComponent(); 
+            InitializeComponent();
+                        
             DateTime date = DateTime.Today;
             DateTime data = date.AddDays(2);
             List<ClientService> ser = Base.DB.ClientService.Where(x => x.StartTime >= DateTime.Today && x.StartTime < data).ToList();
@@ -51,6 +52,11 @@ namespace LanguageSchool
         private void Time(object sender, EventArgs e)
         {
             Load();
+        }
+
+        private void Main_Click(object sender, RoutedEventArgs e)
+        {
+            ClassFrame.frame.Navigate(new ListOfServices());
         }
     }
 }

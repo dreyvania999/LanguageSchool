@@ -33,6 +33,8 @@ namespace LanguageSchool
         public AddService()
         {
             InitializeComponent();
+
+            Title.Text = "Добавление записи";
             AddPhotos.Visibility = Visibility.Collapsed;
             service = new Service();
            
@@ -41,7 +43,7 @@ namespace LanguageSchool
         {
             InitializeComponent();
 
-
+            Title.Text = "Изменение записи";
             IsCreate = false;
             this.service = service;
 
@@ -49,7 +51,7 @@ namespace LanguageSchool
             IdService.Text = service.ID.ToString();
             NameServices.Text = service.Title;
             Description.Text = service.Description;
-            PriceServices.Text = service.CostLesson.ToString();
+            PriceServices.Text = service.Cost.ToString();
             TimeServices.Text = service.TimeLesson.ToString();
 
             if (service.Discount == null)
@@ -66,7 +68,14 @@ namespace LanguageSchool
 
             
             List<ServicePhoto> photos = Base.DB.ServicePhoto.Where(x => x.ServiceID == service.ID).ToList();
-            UpdatePhoto.Visibility = Visibility.Visible;
+            ListPhoto.ItemsSource = photos;
+
+            if (photos.Count == 0)
+            {
+                MessageBox.Show("Дополнительных изображений не найдено", "Услуги", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+
+            ChangePhoto.Visibility = Visibility.Visible;
            
         }
         public bool NameService()
@@ -192,32 +201,82 @@ namespace LanguageSchool
             }
         }
         int n = 0;
-        private void UpdatePhoto_Click(object sender, RoutedEventArgs e)
+        private void ChangePhoto_Click(object sender, RoutedEventArgs e)
         {
                        
             List<ServicePhoto> servicePhoto = Base.DB.ServicePhoto.Where(x => x.ServiceID == service.ID).ToList();
-            if (servicePhoto.Count > 1)
+            if (servicePhoto.Count >= 1)
             {
 
                 BitmapImage img = new BitmapImage(new Uri(servicePhoto[n].PhotoPath, UriKind.RelativeOrAbsolute));
                 ImageService.Source = img;
 
-                Next.Visibility = Visibility.Visible;
-                btnBack.Visibility = Visibility.Visible;
-                SavePhoto.Visibility = Visibility.Visible;
                 AddPhoto.Visibility = Visibility.Collapsed;
-                UpdatePhoto.Visibility = Visibility.Collapsed;
-                Back.Visibility = Visibility.Visible;
+                ChangePhoto.Visibility = Visibility.Collapsed;              
                 AddPhotos.Visibility = Visibility.Collapsed;
+                SavePhoto.Visibility = Visibility.Visible;
                 DeletPhoto.Visibility = Visibility.Visible;
+
             }
             else
             {
                 MessageBox.Show("Нет дополнительных фотографий", "Ошибка", MessageBoxButton.OK);
-            }
+            }        
 
         }
+        private void Next_Click(object sender, RoutedEventArgs e)
+        {
+            List<ServicePhoto> servicePhoto = Base.DB.ServicePhoto.Where(x => x.ServiceID == service.ID).ToList();
 
+            n++;
+            if (Back.IsEnabled == false)
+            {
+                Back.IsEnabled = true;
+            }
+            if (servicePhoto != null)  // если объект не пустой, начинает переводить байтовый массив в изображение
+            {
+
+                BitmapImage img = new BitmapImage(new Uri(servicePhoto[n].PhotoPath, UriKind.RelativeOrAbsolute));
+                ImageService.Source = img;
+            }
+            if (n == servicePhoto.Count - 1)
+            {
+                Next.IsEnabled = false;
+            }
+        }
+
+
+        private void Back_Click(object sender, RoutedEventArgs e)
+        {
+            List<ServicePhoto> u = Base.DB.ServicePhoto.Where(x => x.ServiceID == service.ID).ToList();
+
+            n--;
+            if (Next.IsEnabled == false)
+            {
+                Next.IsEnabled = true;
+            }
+            if (u != null)  // если объект не пустой, начинает переводить байтовый массив в изображение
+            {
+
+                BitmapImage img = new BitmapImage(new Uri(u[n].PhotoPath, UriKind.RelativeOrAbsolute));
+                ImageService.Source = img;
+            }
+           
+        }
+        private void SavePhoto_Click(object sender, RoutedEventArgs e)
+        {
+
+            List<ServicePhoto> u = Base.DB.ServicePhoto.Where(x => x.ServiceID == service.ID).ToList();
+            service.MainImagePath = u[n].PhotoPath;
+            Base.DB.SaveChanges();
+            MessageBox.Show("Фотография изменена");          
+            SavePhoto.Visibility = Visibility.Collapsed;
+            AddPhoto.Visibility = Visibility.Visible;            
+            ChangePhoto.Visibility = Visibility.Visible;
+            AddPhotos.Visibility = Visibility.Visible;
+            DeletPhoto.Visibility = Visibility.Collapsed;
+            ClassFrame.frame.Navigate(new ListOfServices());
+        }
         private void Add_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -259,6 +318,7 @@ namespace LanguageSchool
                                 {
                                     Base.DB.SaveChanges();
                                     MessageBox.Show("Услуга успешно изменена", "Услуги", MessageBoxButton.OK, MessageBoxImage.Information);
+                                    ClassFrame.frame.Navigate(new ListOfServices());
                                 }
                             }
                         }
@@ -272,83 +332,6 @@ namespace LanguageSchool
             
         }
 
-        private void Next_Click(object sender, RoutedEventArgs e)
-        {
-            List<ServicePhoto> servicePhoto = Base.DB.ServicePhoto.Where(x => x.ServiceID == service.ID).ToList();
-
-            n++;
-            if (btnBack.IsEnabled == false)
-            {
-                btnBack.IsEnabled = true;
-            }
-            if (servicePhoto != null)  // если объект не пустой, начинает переводить байтовый массив в изображение
-            {
-
-                BitmapImage img = new BitmapImage(new Uri(servicePhoto[n].PhotoPath, UriKind.RelativeOrAbsolute));
-                ImageService.Source = img;
-            }
-            if (n == servicePhoto.Count - 1)
-            {
-                Next.IsEnabled = false;
-            }
-        }
-
-
-        private void btnBack_Click(object sender, RoutedEventArgs e)
-        {
-            List<ServicePhoto> u = Base.DB.ServicePhoto.Where(x => x.ServiceID == service.ID).ToList();
-
-            n--;
-            if (Next.IsEnabled == false)
-            {
-                Next.IsEnabled = true;
-            }
-            if (u != null)  // если объект не пустой, начинает переводить байтовый массив в изображение
-            {
-
-                BitmapImage img = new BitmapImage(new Uri(u[n].PhotoPath, UriKind.RelativeOrAbsolute));
-                ImageService.Source = img;
-            }
-            if (n == 0)
-            {
-                btnBack.IsEnabled = false;
-            }
-        }
-
-        private void SavePhoto_Click(object sender, RoutedEventArgs e)
-        {           
-
-            List<ServicePhoto> u = Base.DB.ServicePhoto.Where(x => x.ServiceID == service.ID).ToList();
-            service.MainImagePath = u[n].PhotoPath;
-            Base.DB.SaveChanges();
-            MessageBox.Show("Фотография изменена");
-            Next.Visibility = Visibility.Collapsed;
-            btnBack.Visibility = Visibility.Collapsed;
-            SavePhoto.Visibility = Visibility.Collapsed;
-            AddPhoto.Visibility = Visibility.Visible;
-            Back.Visibility = Visibility.Collapsed;
-            UpdatePhoto.Visibility = Visibility.Visible;
-            AddPhotos.Visibility = Visibility.Visible;
-            DeletPhoto.Visibility = Visibility.Collapsed;
-        }
-
-        private void Back_Click(object sender, RoutedEventArgs e)
-        {
-            Next.Visibility = Visibility.Collapsed;
-            btnBack.Visibility = Visibility.Collapsed;
-            SavePhoto.Visibility = Visibility.Collapsed;
-            AddPhoto.Visibility = Visibility.Visible;
-            Back.Visibility = Visibility.Collapsed;
-            UpdatePhoto.Visibility = Visibility.Visible;
-            AddPhotos.Visibility = Visibility.Visible;
-            DeletPhoto.Visibility = Visibility.Collapsed;
-            if (service.MainImagePath != null)
-            {
-                BitmapImage img = new BitmapImage(new Uri(service.MainImagePath, UriKind.RelativeOrAbsolute));
-                ImageService.Source = img;
-            }
-
-        }
         private void AddPhotos_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -373,7 +356,7 @@ namespace LanguageSchool
 
                         ServicePhoto photo = new ServicePhoto()
                         {
-                            ServiceID = id,
+                            ServiceID = service.ID,
                             PhotoPath = "\\images\\" + array[array.Length - 1]
                         };
 
@@ -391,6 +374,16 @@ namespace LanguageSchool
                 MessageBox.Show("Что-то пошло не так. Часть файлов не удалось загрузить", "Услуги", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
+
+        private void Image_Loaded(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Controls.Image image = (System.Windows.Controls.Image)sender;
+            int id = Convert.ToInt32(image.Uid);
+
+            string fileName = Base.DB.ServicePhoto.FirstOrDefault(x => x.ID == id).PhotoPath;
+            string path = Environment.CurrentDirectory.Substring(0, Environment.CurrentDirectory.Length - 10) + fileName;
+            image.Source = new BitmapImage(new Uri(path, UriKind.Absolute));
+        } 
 
         private void DeletPhoto_Click(object sender, RoutedEventArgs e)
         {

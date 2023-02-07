@@ -21,12 +21,12 @@ namespace LanguageSchool
     /// </summary>
     public partial class AddRecord : Page
     {
-        Service ser;
+        Service service;
         ClientService client;
         public AddRecord(Service service)
         {
             InitializeComponent();
-            this.ser = service;
+            this.service = service;
             Title.Text = "Название услуги: " + service.Title + " | " + "Длительность услуги: " + service.TimeLesson + " минут";
             List<Client> clients = Base.DB.Client.ToList();
             for (int i = 0; i < clients.Count; i++)
@@ -42,7 +42,16 @@ namespace LanguageSchool
             DateTime data = date.AddMinutes(Convert.ToInt32(service.TimeLesson));
             TimeEnd.Text = data.ToShortTimeString();
         }
-        void TIMER()
+        private void hh_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TimeCheck();
+        }
+
+        private void mm_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TimeCheck();
+        }
+        void TimeCheck()
         {
             try
             {
@@ -54,7 +63,7 @@ namespace LanguageSchool
                     int HH = Convert.ToInt32(h);
                     int MM = Convert.ToInt32(m);
                     DateTime date = new DateTime(2000, 2, 2, HH, MM, 0);
-                    DateTime data = date.AddMinutes(Convert.ToInt32(ser.TimeLesson));
+                    DateTime data = date.AddMinutes(Convert.ToInt32(service.TimeLesson));
                     TimeEnd.Text = data.ToShortTimeString();
                 }
                 else
@@ -69,15 +78,7 @@ namespace LanguageSchool
                 MessageBox.Show("Что-то пошло не так", "Ошибка", MessageBoxButton.OK);
             }
         }
-        private void hh_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            TIMER();
-        }
-
-        private void mm_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            TIMER();
-        }
+      
 
 
         private void Add_Click(object sender, RoutedEventArgs e)
@@ -89,7 +90,7 @@ namespace LanguageSchool
             else
             {
                 client = new ClientService();
-                client.ServiceID = ser.ID;
+                client.ServiceID = service.ID;
                 client.ClientID = FullName.SelectedIndex + 1;
                 string date = StartDate.Text;
                 string[] Dat = date.Split('.');
