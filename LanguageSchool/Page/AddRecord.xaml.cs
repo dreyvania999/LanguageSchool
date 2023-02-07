@@ -35,9 +35,9 @@ namespace LanguageSchool
             }
 
             hh.Text = DateTime.Now.ToString("HH");
-            mm.Text = DateTime.Now.ToString("mm");
+            mm.Text = DateTime.Now.ToString("MM");
             int HH = Convert.ToInt32(DateTime.Now.ToString("HH"));
-            int MM = Convert.ToInt32(DateTime.Now.ToString("mm"));
+            int MM = Convert.ToInt32(DateTime.Now.ToString("MM"));
             DateTime date = new DateTime(2000, 2, 2, HH, MM, 0);
             DateTime data = date.AddMinutes(Convert.ToInt32(service.TimeLesson));
             TimeEnd.Text = data.ToShortTimeString();
@@ -55,6 +55,10 @@ namespace LanguageSchool
         {
             try
             {
+                if (mm.Text=="")
+                {
+                    return;
+                }
                 int h = Convert.ToInt32(hh.Text);
                 int m = Convert.ToInt32(mm.Text);
                 if ((h < 24) && (m < 60))

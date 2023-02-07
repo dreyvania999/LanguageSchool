@@ -22,6 +22,7 @@ namespace LanguageSchool
     /// </summary>
     public partial class NearRecord : Page
     {
+        DispatcherTimer Timer;
         public NearRecord()
         {
             InitializeComponent();
@@ -30,6 +31,10 @@ namespace LanguageSchool
             DateTime data = date.AddDays(2);
             List<ClientService> ser = Base.DB.ClientService.Where(x => x.StartTime >= DateTime.Today && x.StartTime < data).ToList();
             ListRecord.ItemsSource = ser.OrderBy(x => x.StartTime).ToList();
+            Timer = new DispatcherTimer();
+            Timer.Tick += new EventHandler(Time);
+            Timer.Interval = new TimeSpan(0, 0, 30);
+            Timer.Start();
             Load();
         }
         

@@ -38,7 +38,7 @@
                                 <TextBlock Text="{Binding Client.Email,StringFormat=Email: {0}}"></TextBlock>
                                 <TextBlock Text="{Binding Client.Phone,StringFormat=Телефон: {0}}"></TextBlock>
                                 <TextBlock Text="{Binding StartTime, StringFormat=Дата и Время записи: {0:dd MMMM yyyy HH:mm}}"></TextBlock>
-                                <TextBlock Text="{Binding RemainingTime,StringFormat=Оставшееся время до занятия: {0}}" Foreground="{Binding UpcomingEntriesColor}"/>
+                                <TextBlock Text="{Binding RemainingTime,StringFormat=Оставшееся время до занятия: {0}}" Foreground="{Binding EditColor}"/>
                             </StackPanel>
                         </Grid>
                     </Border>
